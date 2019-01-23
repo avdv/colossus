@@ -69,7 +69,7 @@ class DynamicOutBuffer(baseSize: Int, allocateDirect: Boolean = true) extends Da
 
   private var dyn: Option[ByteBuffer] = if (allocateDirect) None else Some(base)
 
-  def size = dyn.map { _.position }.getOrElse(base.position)
+  def size = dyn.map { _.position() }.getOrElse(base.position())
 
   def isOverflowed: Boolean = dyn.isDefined
 

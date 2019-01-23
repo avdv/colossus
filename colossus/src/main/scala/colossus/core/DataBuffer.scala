@@ -113,10 +113,10 @@ case class DataBuffer(data: ByteBuffer) extends Encoder {
   def remaining = data.remaining
 
   /** Returns how many bytes have already been read from this DataBuffer */
-  def taken = data.position
+  def taken = data.position()
 
   /** Returns the total size of this DataBuffer */
-  def size = data.limit
+  def size = data.limit()
 
   def peek[T](f: DataBuffer => T): (T, Int) = {
     if (peeking) {
@@ -124,9 +124,9 @@ case class DataBuffer(data: ByteBuffer) extends Encoder {
     }
     peeking = true
     data.mark()
-    val pos1 = data.position
+    val pos1 = data.position()
     val res  = f(this)
-    val pos2 = data.position
+    val pos2 = data.position()
     data.reset()
     peeking = false
     (res, pos2 - pos1)
